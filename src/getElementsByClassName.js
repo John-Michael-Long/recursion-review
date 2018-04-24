@@ -10,27 +10,27 @@ var getElementsByClassName = function(className) {
   // if node = className, return node
   // iterate through the node.children
   var result = [];
-  // var classlist = node.classList;
 
   var iterateNode = function(node) {
     
-    node = node || document.body;
-    var classList = node.classList;
+    var classlist = node.classList;
     
-    if (node === className){
+    if (node.className && node.className.includes(className)) {
       result.push(node);
     }
+
+    if (node.childNodes) {   
+
+      for (var i = 0; i < node.childNodes.length; i++) {
+        if (node.childNodes[i]) {
+
+          iterateNode(node.childNodes[i]);
+        }
+      }
     
-    classList.forEach(function(elem){
-      
-    });
-    // if has child node 
-    // forEach --> recursion
-    if (node.childNodes) {
-      
-      
-    } 
+    }
   };
-  iterateNode(document.body)
-  return result;//return result
+  iterateNode(document.body);
+ 
+  return result;
 };
