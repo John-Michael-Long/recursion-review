@@ -1,36 +1,16 @@
-// If life was easy, we could just do things the easy way:
-// var getElementsByClassName = function (className) {
-//   return document.getElementsByClassName(className);
-// };
+// getElementsByClassName from scratch:
 
-// But instead we're going to implement it from scratch:
-var getElementsByClassName = function(className) {
-  // your code here
-  // does document.body exist
-  // if node = className, return node
-  // iterate through the node.children
-  var result = [];
+const getElementsByClassName = (className, node = document.body) => {
 
-  var iterateNode = function(node) {
-    
-    var classlist = node.classList;
-    
-    if (node.className && node.className.includes(className)) {
-      result.push(node);
-    }
+  let result = [];
 
-    if (node.childNodes) {   
+  if (node.className && node.className.includes(className)) {
+    result.push(node);
+  }
 
-      for (var i = 0; i < node.childNodes.length; i++) {
-        if (node.childNodes[i]) {
+  node.childNodes.forEach( node => {
+    result = result.concat(getElementsByClassName(className, node));
+  })
 
-          iterateNode(node.childNodes[i]);
-        }
-      }
-    
-    }
-  };
-  iterateNode(document.body);
- 
   return result;
 };
